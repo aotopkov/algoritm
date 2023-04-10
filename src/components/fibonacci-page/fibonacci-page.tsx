@@ -31,6 +31,7 @@ export const FibonacciPage: React.FC = () => {
       await delay(SHORT_DELAY_IN_MS)
     }
 
+
     setLoader(false);
   }
 

@@ -1,0 +1,22 @@
+.menu_container {
+    margin: auto;
+    max-width: 829px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px
+}
+
+
+.list_container {
+    max-width: 900px;
+    list-style: none;
+    margin: auto;
+    margin-top: 48px;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    row-gap: 40px;
+    flex-wrap: wrap;
+}
