@@ -1,0 +1,25 @@
+.header_container {
+    max-width: 980px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.list_container {
+    margin: auto;
+    margin-top: 48px;
+    margin-bottom: 26px;
+    
+}
+
+.list {
+    min-height: 340px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+    gap: 10px
+}
