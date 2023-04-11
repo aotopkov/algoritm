@@ -141,3 +141,5 @@ class LinkedList<T> implements ILinkedList<T> {
 }
 
 export const list = new LinkedList<string>();
+
+let rename = 'for git FileChanges'
