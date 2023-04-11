@@ -16,7 +16,7 @@ interface QueueState {
 }
 
 export const QueuePage: React.FC = () => {
-  const { values, changeInput, setValue } = useInput("");
+  const { input, changeInput, setValue } = useInput({queue: ''});
   const [queueState, setQueueState] = useState<QueueState>({
     list: [],
     head: null,
@@ -47,7 +47,7 @@ export const QueuePage: React.FC = () => {
   }, []);
 
   async function addToQueue() {
-    queue.enqueue(values);
+    queue.enqueue(input.queue);
     setQueueState({
       ...queueState,
       tail: queue.getTail(),
@@ -60,7 +60,7 @@ export const QueuePage: React.FC = () => {
       index: queue.getTail(),
       enqueue: true,
     });
-    setValue("");
+    setValue({queue: ''});
     await delay(SHORT_DELAY_IN_MS);
     setStatus({
       ...status,
@@ -78,36 +78,47 @@ export const QueuePage: React.FC = () => {
       list: queue.getQueue(),
       tail: queue.getTail(),
     });
-    setStatus({...status, status: ElementStates.Changing, index: queue.getHead(), dequeue: true });
+    setStatus({
+      ...status,
+      status: ElementStates.Changing,
+      index: queue.getHead(),
+      dequeue: true,
+    });
     await delay(SHORT_DELAY_IN_MS);
-    setStatus({...status, status: ElementStates.Default, index: null, dequeue: false });
+    setStatus({
+      ...status,
+      status: ElementStates.Default,
+      index: null,
+      dequeue: false,
+    });
   }
 
   async function clearQueue() {
-    setStatus({...status, clear: true})
-    await delay(SHORT_DELAY_IN_MS)
+    setStatus({ ...status, clear: true });
+    await delay(SHORT_DELAY_IN_MS);
     queue.init();
     setQueueState({
       head: queue.getHead(),
       list: queue.getQueue(),
       tail: queue.getTail(),
     });
-    setStatus({...status, clear: false})
+    setStatus({ ...status, clear: false });
   }
 
   return (
     <SolutionLayout title="Очередь">
       <div className={styles.menu_container}>
         <Input
+          name="queue"
           maxLength={4}
           isLimitText={true}
           onChange={changeInput}
-          value={values}
+          value={input.queue}
         ></Input>
         <Button
           text="Добавить"
           onClick={addToQueue}
-          disabled={values && queueState.tail !== 6 ? false : true}
+          disabled={input.queue && queueState.tail !== 6 ? false : true}
           isLoader={status.enqueue}
         ></Button>
         <Button

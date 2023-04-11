@@ -6,9 +6,10 @@ import styles from "./string.module.css";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
-import { delay } from "../../utils/utils";
+import { delay, useInput } from "../../utils/utils";
 
 export const StringComponent: React.FC = () => {
+  const { input, changeInput, setValue } = useInput({string: ''});
   const [string, setString] = useState<string>("");
   const [loader, setLoader] = useState(false);
   const [stringArr, setStringArr] = useState<string[]>([]);
@@ -22,14 +23,15 @@ export const StringComponent: React.FC = () => {
     }
   }
 
-  function handlerInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setString(value);
-  }
+  // function handlerInput(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const value = e.target.value;
+  //   setString(value);
+  // }
 
   async function handlerClick() {
     setLoader(true);
-    let temp: string[] = string.split("");
+    let temp: string[] = input.string.split("");
+    setValue({string: ''});
     setStringArr(temp);
 
     let start = 0;
@@ -54,34 +56,35 @@ export const StringComponent: React.FC = () => {
     setCurrIndex(start);
 
     setLoader(false);
-    setString("");
+    
   }
 
   return (
     <SolutionLayout title="Строка">
       <div className={styles.input_container}>
         <Input
+          name="string"
           maxLength={11}
           isLimitText={true}
-          onChange={handlerInput}
-          value={string}
+          onChange={changeInput}
+          value={input.string}
         ></Input>
         <Button
           type="submit"
           text="Развернуть"
           onClick={handlerClick}
           isLoader={loader}
-          disabled={!string}
+          disabled={!input.string}
         ></Button>
       </div>
       <div className={styles.circles_container}>
         <ul className={styles.circles_list}>
           {stringArr.map((elem, index) => {
             return (
-              <Circle
+              <li key={index}><Circle
                 letter={elem}
                 state={changeColorCircle(stringArr, currIndex, index)}
-              ></Circle>
+              ></Circle></li>
             );
           })}
         </ul>

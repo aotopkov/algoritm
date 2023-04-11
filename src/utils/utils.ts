@@ -8,11 +8,11 @@ export function delay(millisec: number) {
 
 
 export function useInput(inputs: any)  {
-  const [values, setValue] = useState(inputs);
+  const [input, setValue] = useState(inputs);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input: {value?: string} = e.target;
-    setValue(input.value);
+    const {name, value} = e.target;
+    setValue({...input, [name]: value});
   };
-  return { values, changeInput, setValue };
+  return { input, changeInput, setValue };
 }

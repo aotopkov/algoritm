@@ -9,58 +9,76 @@ import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { stack } from "./stack-class";
 
+interface Status {
+  state: ElementStates,
+  push: boolean,
+  pop: boolean,
+  clear: boolean
+}
+
 export const StackPage: React.FC = () => {
   const [stackArr, setStackArr] = useState<string[]>([]);
-  const { values, changeInput, setValue } = useInput("");
-  const [status, setStatus] = useState<ElementStates>(ElementStates.Default);
-  
+  const { input, changeInput, setValue } = useInput({ stack: "" });
+  const [status, setStatus] = useState<Status>({
+    state: ElementStates.Default,
+    push: false,
+    pop: false,
+    clear: false,
+  });
 
   async function pushToStack() {
-    stack.push(values)
+    stack.push(input.stack);
     setStackArr(stack.getElements());
-    setStatus(ElementStates.Changing);
+    setStatus({...status, state: ElementStates.Changing, push: true});
     await delay(SHORT_DELAY_IN_MS);
-    setStatus(ElementStates.Default);
-    setValue("");
+    setStatus({...status, state: ElementStates.Default, push: false});
+    setValue({ stack: "" });
   }
 
   async function popFromStack() {
-    setStatus(ElementStates.Changing);
+    setStatus({...status, state: ElementStates.Changing, pop: true});
     await delay(SHORT_DELAY_IN_MS);
-    stack.pop()
+    stack.pop();
     setStackArr(stack.getElements());
-    setStatus(ElementStates.Default);
+    setStatus({...status, state: ElementStates.Default, pop: false});
   }
 
-  function clearStack() {
-    stack.clear()
+  async function clearStack() {
+    setStatus({...status, clear: true})
+    await delay(SHORT_DELAY_IN_MS)
+    stack.clear();
     setStackArr(stack.getElements());
+    setStatus({...status, clear: false})
   }
 
   return (
     <SolutionLayout title="Стек">
       <div className={styles.menu_container}>
         <Input
+          name="stack"
           maxLength={4}
           isLimitText={true}
           onChange={changeInput}
-          value={values}
+          value={input.stack}
         ></Input>
         <Button
           text="Добавить"
           onClick={pushToStack}
-          disabled={values ? false : true}
+          disabled={input.stack ? false : true}
+          isLoader={status.push}
         ></Button>
         <Button
           text="Удалить"
           onClick={popFromStack}
           disabled={stackArr.length ? false : true}
+          isLoader={status.pop}
         ></Button>
         <Button
           text="Очистить"
           onClick={clearStack}
           extraClass="ml-40"
           disabled={stackArr.length ? false : true}
+          isLoader={status.clear}
         ></Button>
       </div>
       <ul className={styles.list_container}>
@@ -73,7 +91,7 @@ export const StackPage: React.FC = () => {
                     index={index}
                     letter={elem}
                     head="TOP"
-                    state={status}
+                    state={status.state}
                   ></Circle>
                 </li>
               );

@@ -27,7 +27,7 @@ export class Queue<T> implements IQueue<T> {
   };
 
   enqueue = (item: string) => {
-    if (this.length >= this.size) {
+    if (this.length >= this.size + 1) {
       throw new Error("Maximum length exceeded");
     }
     this.tail++;
