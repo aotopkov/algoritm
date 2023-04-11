@@ -7,6 +7,7 @@ import { delay, useInput } from "../../utils/utils";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { queue } from "./queue-class";
 
 interface QueueState {
   list: string[];
@@ -16,59 +17,82 @@ interface QueueState {
 
 export const QueuePage: React.FC = () => {
   const { values, changeInput, setValue } = useInput("");
-  const [queue, setQueue] = useState<QueueState>({
+  const [queueState, setQueueState] = useState<QueueState>({
     list: [],
     head: null,
     tail: null,
   });
   const [status, setStatus] = useState<{
+    enqueue: boolean;
+    dequeue: boolean;
+    clear: boolean;
     status: ElementStates;
     index: number | null;
-  }>({ status: ElementStates.Default, index: null });
-
-  function initQueue() {
-    let tempArr = [];
-    for (let i = 0; i < 7; i++) {
-      tempArr.push("");
-    }
-    setQueue({ list: tempArr, head: null, tail: null });
-  }
+  }>({
+    status: ElementStates.Default,
+    index: null,
+    enqueue: false,
+    dequeue: false,
+    clear: false,
+  });
 
   useEffect(() => {
-    initQueue();
+    queue.init();
+    setQueueState({
+      ...queueState,
+      tail: queue.getTail(),
+      head: queue.getHead(),
+      list: queue.getQueue(),
+    });
   }, []);
 
   async function addToQueue() {
-    let tempArr = queue.list;
-    if (queue.tail === null) {
-      tempArr[0] = values;
-      setQueue({ ...queue, tail: 0, head: 0, list: tempArr });
-      setStatus({ status: ElementStates.Changing, index: 0 });
-      await delay(SHORT_DELAY_IN_MS);
-    }
-    if (queue.tail !== null) {
-      tempArr[queue.tail + 1] = values;
-      setQueue({ ...queue, tail: queue.tail + 1, list: tempArr });
-      setStatus({ status: ElementStates.Changing, index: queue.tail + 1 });
-      await delay(SHORT_DELAY_IN_MS);
-    }
-    setStatus({ status: ElementStates.Default, index: null });
+    queue.enqueue(values);
+    setQueueState({
+      ...queueState,
+      tail: queue.getTail(),
+      head: queue.getHead(),
+      list: queue.getQueue(),
+    });
+    setStatus({
+      ...status,
+      status: ElementStates.Changing,
+      index: queue.getTail(),
+      enqueue: true,
+    });
     setValue("");
+    await delay(SHORT_DELAY_IN_MS);
+    setStatus({
+      ...status,
+      status: ElementStates.Default,
+      index: null,
+      enqueue: false,
+    });
   }
 
   async function removeFromQueue() {
-    let tempArr = queue.list;
-    if (queue.head !== null) {
-      tempArr[queue.head] = "";
-      setQueue({ ...queue, head: queue.head + 1, list: tempArr });
-      setStatus({ status: ElementStates.Changing, index: queue.head + 1 });
-      await delay(SHORT_DELAY_IN_MS);
-      setStatus({ status: ElementStates.Default, index: null });
-    }
+    queue.dequeue();
+    setQueueState({
+      ...queue,
+      head: queue.getHead(),
+      list: queue.getQueue(),
+      tail: queue.getTail(),
+    });
+    setStatus({...status, status: ElementStates.Changing, index: queue.getHead(), dequeue: true });
+    await delay(SHORT_DELAY_IN_MS);
+    setStatus({...status, status: ElementStates.Default, index: null, dequeue: false });
   }
 
-  function clearQueue() {
-    initQueue();
+  async function clearQueue() {
+    setStatus({...status, clear: true})
+    await delay(SHORT_DELAY_IN_MS)
+    queue.init();
+    setQueueState({
+      head: queue.getHead(),
+      list: queue.getQueue(),
+      tail: queue.getTail(),
+    });
+    setStatus({...status, clear: false})
   }
 
   return (
@@ -83,27 +107,32 @@ export const QueuePage: React.FC = () => {
         <Button
           text="Добавить"
           onClick={addToQueue}
-          disabled={values && queue.tail !== 6 ? false : true}
+          disabled={values && queueState.tail !== 6 ? false : true}
+          isLoader={status.enqueue}
         ></Button>
         <Button
           text="Удалить"
           onClick={removeFromQueue}
           disabled={
-            queue.head == null || queue.tail == null || queue.head >= queue.tail
+            queueState.head == null ||
+            queueState.tail == null ||
+            queueState.head >= queueState.tail
               ? true
               : false
           }
+          isLoader={status.dequeue}
         ></Button>
         <Button
           text="Очистить"
           onClick={clearQueue}
           extraClass="ml-40"
-          disabled={queue.tail ? false : true}
+          disabled={queueState.tail === -1 ? true : false}
+          isLoader={status.clear}
         ></Button>
       </div>
       <ul className={styles.list_container}>
-        {queue.list.map((elem, index) => {
-          if (index === queue.head && index !== queue.tail) {
+        {queueState.list.map((elem, index) => {
+          if (index === queueState.head && index !== queueState.tail) {
             return (
               <li key={index}>
                 <Circle
@@ -119,7 +148,7 @@ export const QueuePage: React.FC = () => {
               </li>
             );
           }
-          if (index === queue.tail && index !== queue.head) {
+          if (index === queueState.tail && index !== queueState.head) {
             return (
               <li key={index}>
                 <Circle
@@ -135,7 +164,7 @@ export const QueuePage: React.FC = () => {
               </li>
             );
           }
-          if (index === queue.tail && index === queue.head) {
+          if (index === queueState.tail && index === queueState.head) {
             return (
               <li key={index}>
                 <Circle
