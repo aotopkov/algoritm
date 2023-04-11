@@ -6,7 +6,6 @@ export function delay(millisec: number) {
     })
 }
 
-
 export function useInput(inputs: any)  {
   const [input, setValue] = useState(inputs);
 

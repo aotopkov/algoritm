@@ -10,7 +10,6 @@ import { delay, useInput } from "../../utils/utils";
 
 export const StringComponent: React.FC = () => {
   const { input, changeInput, setValue } = useInput({string: ''});
-  const [string, setString] = useState<string>("");
   const [loader, setLoader] = useState(false);
   const [stringArr, setStringArr] = useState<string[]>([]);
   const [currIndex, setCurrIndex] = useState<number>(0);
@@ -22,11 +21,6 @@ export const StringComponent: React.FC = () => {
       return ElementStates.Modified;
     }
   }
-
-  // function handlerInput(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const value = e.target.value;
-  //   setString(value);
-  // }
 
   async function handlerClick() {
     setLoader(true);
