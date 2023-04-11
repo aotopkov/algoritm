@@ -7,18 +7,17 @@ import { Circle } from "../ui/circle/circle";
 import styles from "./stack.module.css";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { stack } from "./stack-class";
 
 export const StackPage: React.FC = () => {
-  const [stack, setStack] = useState<string[]>([]);
+  const [stackArr, setStackArr] = useState<string[]>([]);
   const { values, changeInput, setValue } = useInput("");
   const [status, setStatus] = useState<ElementStates>(ElementStates.Default);
+  
 
   async function pushToStack() {
-    if (stack === null) {
-      setStack([values]);
-    } else {
-      setStack([...stack, values]);
-    }
+    stack.push(values)
+    setStackArr(stack.getElements());
     setStatus(ElementStates.Changing);
     await delay(SHORT_DELAY_IN_MS);
     setStatus(ElementStates.Default);
@@ -28,14 +27,14 @@ export const StackPage: React.FC = () => {
   async function popFromStack() {
     setStatus(ElementStates.Changing);
     await delay(SHORT_DELAY_IN_MS);
-    let tempArr = stack;
-    tempArr.pop();
-    setStack(tempArr);
+    stack.pop()
+    setStackArr(stack.getElements());
     setStatus(ElementStates.Default);
   }
 
   function clearStack() {
-    setStack([]);
+    stack.clear()
+    setStackArr(stack.getElements());
   }
 
   return (
@@ -55,18 +54,18 @@ export const StackPage: React.FC = () => {
         <Button
           text="Удалить"
           onClick={popFromStack}
-          disabled={stack?.length ? false : true}
+          disabled={stackArr.length ? false : true}
         ></Button>
         <Button
           text="Очистить"
           onClick={clearStack}
           extraClass="ml-40"
-          disabled={stack?.length ? false : true}
+          disabled={stackArr.length ? false : true}
         ></Button>
       </div>
       <ul className={styles.list_container}>
         {stack != null &&
-          stack.map((elem, index, array) => {
+          stackArr.map((elem, index, array) => {
             if (index === array.length - 1) {
               return (
                 <li key={index}>

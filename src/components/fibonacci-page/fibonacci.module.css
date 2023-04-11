@@ -20,5 +20,6 @@
     flex-direction: row;
     justify-content: center;
     margin: auto;
-    gap: 16px
+    gap: 16px;
+    row-gap: 48px;
 }
