@@ -6,7 +6,7 @@ import { Button } from "../ui/button/button";
 import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
-import { delay } from "../../utils/utils";
+import { delay } from "../../utils/utils_";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {

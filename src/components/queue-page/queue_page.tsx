@@ -3,11 +3,11 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./queue.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
-import { delay, useInput } from "../../utils/utils";
+import { delay, useInput } from "../../utils/utils_";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-import { queue } from "./queue-class";
+import { queue } from "./queue_class";
 
 interface QueueState {
   list: string[];

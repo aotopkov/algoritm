@@ -4,11 +4,12 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import styles from "./list.module.css";
 import { Circle } from "../ui/circle/circle";
-import { delay, useInput } from "../../utils/utils";
-import { list } from "./list-class";
+import { delay, useInput } from "../../utils/utils_";
+import { list } from "./list_class";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { HEAD, TAIL } from "../../constants/element-captions";
 
 export const ListPage: React.FC = () => {
   const { input, changeInput, setValue } = useInput({ value: "", index: 0 });
@@ -62,15 +63,15 @@ export const ListPage: React.FC = () => {
     });
   }
 
-  async function deleteNode(method: "head" | "tail") {
+  async function deleteNode(method: 'head' | 'tail') {
     setStatus({
       ...status,
-      deleteHead: method === "head" ? true : false,
-      deleteTail: method === "tail" ? true : false,
-      value: method === "head" ? listState[0] : listState[listState.length - 1],
+      deleteHead: method === HEAD ? true : false,
+      deleteTail: method === TAIL ? true : false,
+      value: method === HEAD ? listState[0] : listState[listState.length - 1],
     });
     await delay(SHORT_DELAY_IN_MS);
-    method === "head" ? list.deleteHead() : list.deleteTail();
+    method === HEAD ? list.deleteHead() : list.deleteTail();
     setListState(list.toArray());
     setStatus({ ...status, deleteHead: false, deleteTail: false, value: "" });
   }
@@ -131,14 +132,14 @@ export const ListPage: React.FC = () => {
         <Button
           text="Удалить из head"
           linkedList={"small"}
-          onClick={() => deleteNode("head")}
+          onClick={() => deleteNode(HEAD)}
           isLoader={status.deleteHead}
           disabled={!listState.length}
         ></Button>
         <Button
           text="Удалить из tail"
           linkedList={"small"}
-          onClick={() => deleteNode("tail")}
+          onClick={() => deleteNode(TAIL)}
           isLoader={status.deleteTail}
           disabled={listState.length === 1 || !listState.length}
         ></Button>
