@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./sorting.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
@@ -27,6 +27,10 @@ export const SortingPage: React.FC = () => {
     }
     setArray(randArr);
   }
+
+  useEffect(() => {
+    getRandomArr()
+  }, [])
 
   function swap(
     arr: { value: number; state: ElementStates }[],

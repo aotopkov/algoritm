@@ -37,5 +37,3 @@ export class Stack<T> implements IStack<T> {
 }
 
 export const stack = new Stack<string>();
-
-let rename = 'for git FileChanges'

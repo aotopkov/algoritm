@@ -66,5 +66,3 @@ export class Queue<T> implements IQueue<T> {
 }
 
 export const queue = new Queue<string>(7);
-
-let rename = 'for git FileChanges'

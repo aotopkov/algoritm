@@ -31,7 +31,7 @@ export const FibonacciPage: React.FC = () => {
       await delay(SHORT_DELAY_IN_MS)
     }
 
-
+    setCount(0)
     setLoader(false);
   }
 
@@ -39,10 +39,12 @@ export const FibonacciPage: React.FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={styles.input_container}>
         <Input
+          name="value"
           max="19"
           isLimitText={true}
           type="number"
           onChange={handlerInput}
+          value={count}
         ></Input>
         <Button
           text="Рассчитать"

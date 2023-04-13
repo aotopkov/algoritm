@@ -48,7 +48,7 @@ export const ListPage: React.FC = () => {
     await delay(SHORT_DELAY_IN_MS);
     method === "prepend" ? list.prepend(input.value) : list.append(input.value);
     setListState(list.toArray());
-    setValue({ value: "" });
+    setValue({...input, value: "" });
     setStatus((status) => ({
       ...status,
       value: "",
