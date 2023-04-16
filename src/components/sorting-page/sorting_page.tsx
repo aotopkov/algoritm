@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./sorting.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
@@ -6,7 +6,7 @@ import { Button } from "../ui/button/button";
 import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 import { ElementStates } from "../../types/element-states";
-import { delay } from "../../utils/utils";
+import { delay } from "../../utils/utils_";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
@@ -27,6 +27,10 @@ export const SortingPage: React.FC = () => {
     }
     setArray(randArr);
   }
+
+  useEffect(() => {
+    getRandomArr()
+  }, [])
 
   function swap(
     arr: { value: number; state: ElementStates }[],

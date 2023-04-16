@@ -6,7 +6,7 @@ import styles from "./string.module.css";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
-import { delay, useInput } from "../../utils/utils";
+import { delay, useInput } from "../../utils/utils_";
 
 export const StringComponent: React.FC = () => {
   const { input, changeInput, setValue } = useInput({string: ''});

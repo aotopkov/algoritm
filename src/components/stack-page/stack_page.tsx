@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
-import { delay, useInput } from "../../utils/utils";
+import { delay, useInput } from "../../utils/utils_";
 import { Circle } from "../ui/circle/circle";
 import styles from "./stack.module.css";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-import { stack } from "./stack-class";
+import { stack } from "./stack_class";
 
 interface Status {
   state: ElementStates,
