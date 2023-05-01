@@ -24,16 +24,16 @@ describe("test Button component", function () {
   });
 
   test("button onclick works", function () {
-    const onClick = jest.fn()
+    const click = jest.fn()
     render(
-      <Button
+      <Button text="button"
         onClick={() => {
-          onClick;
+          click();
         }}
       ></Button>
     );
-    const button = screen.getByRole("button");
+    const button = screen.getByText("button");
     fireEvent.click(button);
-    expect(onClick).toHaveBeenCalled()
+    expect(click).toHaveBeenCalled()
   });
 });
