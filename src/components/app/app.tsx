@@ -4,7 +4,7 @@ import { FibonacciPage } from "../fibonacci-page/fibonacci_page";
 import { ListPage } from "../list-page/list_page";
 import { MainPage } from "../main-page/main-page";
 import { QueuePage } from "../queue-page/queue_page";
-import { StringComponent } from "../string/string_";
+import { StringComponent } from "../string/string";
 import { SortingPage } from "../sorting-page/sorting_page";
 import { StackPage } from "../stack-page/stack_page";
 

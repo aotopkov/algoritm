@@ -9,7 +9,7 @@ import { DELAY_IN_MS } from "../../constants/delays";
 import { delay, useInput } from "../../utils/utils_";
 
 export const StringComponent: React.FC = () => {
-  const { input, changeInput, setValue } = useInput({string: ''});
+  const { input, changeInput, setValue } = useInput({ string: "" });
   const [loader, setLoader] = useState(false);
   const [stringArr, setStringArr] = useState<string[]>([]);
   const [currIndex, setCurrIndex] = useState<number>(0);
@@ -25,7 +25,7 @@ export const StringComponent: React.FC = () => {
   async function handlerClick() {
     setLoader(true);
     let temp: string[] = input.string.split("");
-    setValue({string: ''});
+    setValue({ string: "" });
     setStringArr(temp);
 
     let start = 0;
@@ -50,13 +50,13 @@ export const StringComponent: React.FC = () => {
     setCurrIndex(start);
 
     setLoader(false);
-    
   }
 
   return (
     <SolutionLayout title="Строка">
       <div className={styles.input_container}>
         <Input
+          data-testid="input"
           name="string"
           maxLength={11}
           isLimitText={true}
@@ -64,6 +64,7 @@ export const StringComponent: React.FC = () => {
           value={input.string}
         ></Input>
         <Button
+          data-testid="reverseBtn"
           type="submit"
           text="Развернуть"
           onClick={handlerClick}
@@ -75,10 +76,13 @@ export const StringComponent: React.FC = () => {
         <ul className={styles.circles_list}>
           {stringArr.map((elem, index) => {
             return (
-              <li key={index}><Circle
-                letter={elem}
-                state={changeColorCircle(stringArr, currIndex, index)}
-              ></Circle></li>
+              <li key={index}>
+                <Circle
+                  data-testid="circle"
+                  letter={elem}
+                  state={changeColorCircle(stringArr, currIndex, index)}
+                ></Circle>
+              </li>
             );
           })}
         </ul>
