@@ -109,6 +109,7 @@ export const QueuePage: React.FC = () => {
     <SolutionLayout title="Очередь">
       <div className={styles.menu_container}>
         <Input
+        data-testId='input'
           name="queue"
           maxLength={4}
           isLimitText={true}
@@ -116,12 +117,14 @@ export const QueuePage: React.FC = () => {
           value={input.queue}
         ></Input>
         <Button
+        data-testId='buttonAdd'
           text="Добавить"
           onClick={addToQueue}
           disabled={input.queue && queueState.tail !== 6 ? false : true}
           isLoader={status.enqueue}
         ></Button>
         <Button
+        data-testId='buttonRemove'
           text="Удалить"
           onClick={removeFromQueue}
           disabled={
@@ -134,6 +137,7 @@ export const QueuePage: React.FC = () => {
           isLoader={status.dequeue}
         ></Button>
         <Button
+        data-testId='buttonClear'
           text="Очистить"
           onClick={clearQueue}
           extraClass="ml-40"

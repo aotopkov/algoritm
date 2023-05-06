@@ -27,7 +27,7 @@ export const ListPage: React.FC = () => {
   });
 
   function getRandomList() {
-    let length = Math.floor(Math.random() * (6 - 2) + 2);
+    let length = Math.floor(Math.random() * (6 - 3) + 3);
     for (let i = 1; i < length; i++) {
       list.append(String(Math.floor(Math.random() * 100)));
     }
@@ -107,6 +107,7 @@ export const ListPage: React.FC = () => {
       <div className={styles.input_container}>
         <div className={styles.input}>
           <Input
+          data-testId="input"
             name="value"
             maxLength={4}
             isLimitText={true}
@@ -116,6 +117,7 @@ export const ListPage: React.FC = () => {
           ></Input>
         </div>
         <Button
+        data-testId="btnAddToHead"
           text="Добавить в head"
           linkedList={"small"}
           onClick={() => insertNode("prepend")}
@@ -123,6 +125,7 @@ export const ListPage: React.FC = () => {
           disabled={input.value === "" ? true : false}
         ></Button>
         <Button
+        data-testId="btnAddToTail"
           text="Добавить в tail"
           linkedList={"small"}
           onClick={() => insertNode("append")}
@@ -130,6 +133,7 @@ export const ListPage: React.FC = () => {
           disabled={input.value === "" ? true : false}
         ></Button>
         <Button
+        data-testId="btnDeleteFromHead"
           text="Удалить из head"
           linkedList={"small"}
           onClick={() => deleteNode(HEAD)}
@@ -137,6 +141,7 @@ export const ListPage: React.FC = () => {
           disabled={!listState.length}
         ></Button>
         <Button
+        data-testId="btnDeleteFromTail"
           text="Удалить из tail"
           linkedList={"small"}
           onClick={() => deleteNode(TAIL)}
@@ -147,6 +152,7 @@ export const ListPage: React.FC = () => {
       <div className={styles.input_container}>
         <div className={styles.input}>
           <Input
+          data-testId="index"
             type="number"
             placeholder="Введите индекс"
             name="index"
@@ -156,12 +162,14 @@ export const ListPage: React.FC = () => {
           ></Input>
         </div>
         <Button
+        data-testId="btnAddFromIndex"
           linkedList={"big"}
           text="Добавить по индексу"
           onClick={() => fromIndex("insert")}
           disabled={input.index < 1 || input.value === "" ? true : false}
         ></Button>
         <Button
+        data-testId="btnDeleteFromIndex"
           onClick={() => fromIndex("delete")}
           linkedList={"big"}
           text="Удалить по индексу"

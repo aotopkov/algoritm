@@ -7,13 +7,13 @@ describe("string page test", () => {
 
   it("check disabled button when input empty", () => {
     cy.get('[data-testId="input"]').should("have.value", "");
-    cy.get('[data-testId="reverseBtn"]').should("have.disabled", "true");
+    cy.get('[data-testId="button"]').should("have.disabled", "true");
   });
 
   it("check correct work reverse string", () => {
     cy.get('[data-testId="input"]').type("abcd");
 
-    cy.get('[data-testId="reverseBtn"]').click();
+    cy.get('[data-testId="button"]').click();
     cy.wait(DELAY_IN_MS);
    
     cy.get('[class^="circle_circle"]').then(($li) => {
@@ -100,6 +100,6 @@ describe("string page test", () => {
       });
 
       cy.get('[data-testId="input"]').should("have.value", "");
-      cy.get('[data-testId="reverseBtn"]').should("have.disabled", "true");
+      cy.get('[data-testId="button"]').should("have.disabled", "true");
   });
 });

@@ -55,6 +55,7 @@ export const StackPage: React.FC = () => {
     <SolutionLayout title="Стек">
       <div className={styles.menu_container}>
         <Input
+        data-testId="input"
           name="stack"
           maxLength={4}
           isLimitText={true}
@@ -62,18 +63,21 @@ export const StackPage: React.FC = () => {
           value={input.stack}
         ></Input>
         <Button
+        data-testId="buttonAdd"
           text="Добавить"
           onClick={pushToStack}
           disabled={input.stack ? false : true}
           isLoader={status.push}
         ></Button>
         <Button
+        data-testId='buttonRemove'
           text="Удалить"
           onClick={popFromStack}
           disabled={stackArr.length ? false : true}
           isLoader={status.pop}
         ></Button>
         <Button
+        data-testId='buttonClear'
           text="Очистить"
           onClick={clearStack}
           extraClass="ml-40"

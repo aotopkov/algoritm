@@ -19,7 +19,7 @@ export const FibonacciPage: React.FC = () => {
 
   async function handlerClick() {
     setLoader(true);
-    setFiboArr([])
+    setFiboArr([]);
 
     let arr: number[] = [1, 1];
     for (let i = 2; i < count + 1; i++) {
@@ -27,11 +27,11 @@ export const FibonacciPage: React.FC = () => {
     }
 
     for (let i = 0; i < arr.length; i++) {
-      setFiboArr(fiboArr =>[...fiboArr, arr[i]])
-      await delay(SHORT_DELAY_IN_MS)
+      setFiboArr((fiboArr) => [...fiboArr, arr[i]]);
+      await delay(SHORT_DELAY_IN_MS);
     }
 
-    setCount(0)
+    setCount(0);
     setLoader(false);
   }
 
@@ -39,6 +39,7 @@ export const FibonacciPage: React.FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={styles.input_container}>
         <Input
+          data-testId="input"
           name="value"
           max="19"
           isLimitText={true}
@@ -47,6 +48,7 @@ export const FibonacciPage: React.FC = () => {
           value={count}
         ></Input>
         <Button
+          data-testId="button"
           text="Рассчитать"
           onClick={handlerClick}
           isLoader={loader}

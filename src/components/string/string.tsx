@@ -64,7 +64,7 @@ export const StringComponent: React.FC = () => {
           value={input.string}
         ></Input>
         <Button
-          data-testid="reverseBtn"
+          data-testid="button"
           type="submit"
           text="Развернуть"
           onClick={handlerClick}
