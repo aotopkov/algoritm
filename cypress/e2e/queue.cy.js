@@ -1,20 +1,21 @@
 import { DELAY_IN_MS } from "./../../src/constants/delays";
+import { buttonAdd, buttonClear, buttonRemove, circle, input } from "./constant";
 
 describe("queue page test", () => {
   beforeEach("string page is open", () => {
-    cy.visit("http://localhost:3000/queue");
+    cy.visit("queue");
   });
 
   it("check disabled button when input empty", () => {
-    cy.get('[data-testId="input"]').should("have.value", "");
-    cy.get('[data-testId="buttonAdd"]').should("have.disabled", "true");
+    cy.get(input).should("have.value", "");
+    cy.get(buttonAdd).should("have.disabled", "true");
   });
 
   it("check add to queue", () => {
-    cy.get('[data-testId="input"]').type("1");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("1");
+    cy.get(buttonAdd).click();
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[0]).siblings().contains("head");
       cy.get($li[0]).siblings().contains("tail");
@@ -25,17 +26,17 @@ describe("queue page test", () => {
 
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[0])
         .invoke("attr", "class")
         .then((classList) => expect(classList).contains("default"));
     });
 
-    cy.get('[data-testId="input"]').type("2");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("2");
+    cy.get(buttonAdd).click();
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[0]).siblings().contains("head");
       cy.get($li[1]).children().should("have.text", "2");
@@ -47,7 +48,7 @@ describe("queue page test", () => {
 
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[1]).children().should("have.text", "2");
       cy.get($li[1])
@@ -57,48 +58,48 @@ describe("queue page test", () => {
   });
 
   it("check remove from queue", () => {
-    cy.get('[data-testId="input"]').type("1");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("1");
+    cy.get(buttonAdd).click();
     cy.wait(DELAY_IN_MS);
-    cy.get('[data-testId="input"]').type("2");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("2");
+    cy.get(buttonAdd).click();
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[0]).siblings().contains("head");
       cy.get($li[1]).children().should("have.text", "2");
       cy.get($li[1]).siblings().contains("tail");
     });
 
-    cy.get('[data-testId="buttonRemove"]').click();
+    cy.get(buttonRemove).click();
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[1]).siblings().contains("head");
       cy.get($li[1]).children().should("have.text", "2");
       cy.get($li[1]).siblings().contains("tail");
     });
 
-    cy.get('[data-testId="buttonRemove"]').should("have.disabled", "true");
+    cy.get(buttonRemove).should("have.disabled", "true");
   });
 
   it("check clear queue", () => {
-    cy.get('[data-testId="input"]').type("1");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("1");
+    cy.get(buttonAdd).click();
     cy.wait(DELAY_IN_MS);
-    cy.get('[data-testId="input"]').type("2");
-    cy.get('[data-testId="buttonAdd"]').click();
+    cy.get(input).type("2");
+    cy.get(buttonAdd).click();
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "1");
       cy.get($li[0]).siblings().contains("head");
       cy.get($li[1]).children().should("have.text", "2");
       cy.get($li[1]).siblings().contains("tail");
     });
 
-    cy.get('[data-testId="buttonClear"]').click();
-    cy.get('[data-testId="buttonRemove"]').should("have.disabled", "true");
-    cy.get('[data-testId="buttonClear"]').should("have.disabled", "true");
+    cy.get(buttonClear).click();
+    cy.get(buttonRemove).should("have.disabled", "true");
+    cy.get(buttonClear).should("have.disabled", "true");
   });
 });

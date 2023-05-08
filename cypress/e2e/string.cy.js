@@ -1,22 +1,23 @@
 import { DELAY_IN_MS } from "./../../src/constants/delays";
+import { button, circle, input } from "./constant";
 
 describe("string page test", () => {
   beforeEach("string page is open", () => {
-    cy.visit("http://localhost:3000/recursion");
+    cy.visit("recursion");
   });
 
   it("check disabled button when input empty", () => {
-    cy.get('[data-testId="input"]').should("have.value", "");
-    cy.get('[data-testId="button"]').should("have.disabled", "true");
+    cy.get(input).should("have.value", "");
+    cy.get(button).should("have.disabled", "true");
   });
 
   it("check correct work reverse string", () => {
-    cy.get('[data-testId="input"]').type("abcd");
+    cy.get(input).type("abcd");
 
-    cy.get('[data-testId="button"]').click();
+    cy.get(button).click();
     cy.wait(DELAY_IN_MS);
    
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "a");
       cy.get($li[0])
         .invoke("attr", "class")
@@ -37,7 +38,7 @@ describe("string page test", () => {
 
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "d");
       cy.get($li[0])
         .invoke("attr", "class")
@@ -59,7 +60,7 @@ describe("string page test", () => {
     cy.wait(DELAY_IN_MS);
 
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", "d");
       cy.get($li[0])
         .invoke("attr", "class")
@@ -80,7 +81,7 @@ describe("string page test", () => {
 
     cy.wait(DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
         cy.get($li[0]).children().should("have.text", "d");
         cy.get($li[0])
           .invoke("attr", "class")
@@ -99,7 +100,7 @@ describe("string page test", () => {
           .then((classList) => expect(classList).contains("modified"));
       });
 
-      cy.get('[data-testId="input"]').should("have.value", "");
-      cy.get('[data-testId="button"]').should("have.disabled", "true");
+      cy.get(input).should("have.value", "");
+      cy.get(button).should("have.disabled", "true");
   });
 });

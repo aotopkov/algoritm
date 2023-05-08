@@ -1,35 +1,36 @@
 import { SHORT_DELAY_IN_MS } from "./../../src/constants/delays";
+import { button, circle, input } from "./constant";
 
 describe("fibonacci page test", () => {
   beforeEach("string page is open", () => {
-    cy.visit("http://localhost:3000/fibonacci");
+    cy.visit("fibonacci");
   });
 
   it("check disabled button when input empty", () => {
-    cy.get('[data-testId="input"]').should("have.value", 0);
-    cy.get('[data-testId="button"]').should("have.disabled", "true");
+    cy.get(input).should("have.value", 0);
+    cy.get(button).should("have.disabled", "true");
   });
 
   it("check correct work", () => {
-    cy.get('[data-testId="input"]').type(5);
+    cy.get(input).type(5);
 
-    cy.get('[data-testId="button"]').click();
+    cy.get(button).click();
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
     });
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
       cy.get($li[1]).children().should("have.text", 1);
     });
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
       cy.get($li[1]).children().should("have.text", 1);
       cy.get($li[2]).children().should("have.text", 2);
@@ -37,7 +38,7 @@ describe("fibonacci page test", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
       cy.get($li[1]).children().should("have.text", 1);
       cy.get($li[2]).children().should("have.text", 2);
@@ -46,7 +47,7 @@ describe("fibonacci page test", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
       cy.get($li[1]).children().should("have.text", 1);
       cy.get($li[2]).children().should("have.text", 2);
@@ -56,7 +57,7 @@ describe("fibonacci page test", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[class^="circle_circle"]').then(($li) => {
+    cy.get(circle).then(($li) => {
       cy.get($li[0]).children().should("have.text", 1);
       cy.get($li[1]).children().should("have.text", 1);
       cy.get($li[2]).children().should("have.text", 2);
@@ -67,7 +68,7 @@ describe("fibonacci page test", () => {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get('[data-testId="input"]').should("have.value", 0);
-    cy.get('[data-testId="button"]').should("have.disabled", "true");
+    cy.get(input).should("have.value", 0);
+    cy.get(button).should("have.disabled", "true");
   });
 });

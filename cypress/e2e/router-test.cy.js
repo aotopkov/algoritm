@@ -8,32 +8,32 @@ describe("route test", () => {
   })
   
   it('string page is avaible', () => {
-    cy.visit('http://localhost:3000/recursion');
+    cy.visit('recursion');
     cy.contains('Строка')
   })
 
   it('fibo page is avaible', () => {
-    cy.visit('http://localhost:3000/fibonacci')
+    cy.visit('fibonacci')
     cy.contains('Последовательность Фибоначчи')
   })
 
   it('sort page is avaible', () => {
-    cy.visit('http://localhost:3000/sorting')
+    cy.visit('sorting')
     cy.contains('Сортировка массива')
   })
 
   it('stack page is avaible', () => {
-    cy.visit('http://localhost:3000/stack')
+    cy.visit('stack')
     cy.contains('Стек')
   })
 
   it('queue page is avaible', () => {
-    cy.visit('http://localhost:3000/queue')
+    cy.visit('queue')
     cy.contains('Очередь')
   })
 
   it('list page is avaible', () => {
-    cy.visit('http://localhost:3000/list')
+    cy.visit('list')
     cy.contains('Связный список')
   })
 });

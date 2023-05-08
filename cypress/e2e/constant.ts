@@ -1,0 +1,7 @@
+export const input = '[data-testId="input"]'
+export const button = '[data-testId="button"]'
+export const circle = '[class^="circle_circle"]'
+export const index = '[data-testId="index"]'
+export const buttonAdd = '[data-testId="buttonAdd"]'
+export const buttonRemove = '[data-testId="buttonRemove"]'
+export const buttonClear = '[data-testId="buttonClear"]'
